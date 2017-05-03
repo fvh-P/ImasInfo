@@ -26,8 +26,9 @@ end
 
 topics = doc.xpath('//div[@id="topics"]').xpath('.//div[@class="inner"]')
 article = topics.css('a')
-post = []
+post = Array.new
 prevurl = log[-1].chomp
+
 article.each_with_index do |e, i|
     title = e.inner_html
     url = e.attribute('href').value
@@ -45,4 +46,5 @@ post.reverse.each do |e|
     f.puts(Time.now)
     f.puts(e)
 end
+
 f.close
