@@ -18,9 +18,6 @@ rescue
     f.puts("アクセスできませんでした。\n#{src}")
     f.puts(log[-2])
     f.puts()
-end
-
-if doc == nil
     return
 end
 
