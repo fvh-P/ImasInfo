@@ -6,12 +6,15 @@ require 'dotenv'
 
 Dir.chdir(File.expand_path("../", __FILE__))
 Dotenv.load
+
 f = File.open(File.expand_path("../ImasInfo.log", __FILE__),"r")
 log = f.readlines
 f.close
+
 f = File.open(File.expand_path("../ImasInfo.log", __FILE__),"a")
 client = Mastodon::REST::Client.new(base_url: ENV["MASTODON_URL"], bearer_token: ENV["MASTODON_ACCESS_TOKEN"])
 src = "http://idolmaster.jp/blog/"
+
 begin
     doc = Nokogiri::HTML(open(src))
 rescue
@@ -25,7 +28,7 @@ end
 topics = doc.xpath('//div[@id="topics"]').xpath('.//div[@class="inner"]')
 article = topics.css('a')
 post = Array.new
-prevurl = log[-1].chomp
+prevurl = log[-2].chomp
 
 article.each_with_index do |e, i|
     title = e.inner_html
@@ -33,7 +36,7 @@ article.each_with_index do |e, i|
     if(prevurl.eql?(url))
         break
     else
-        post << "【アイマス公式ブログ更新情報】\n#{title}\n#{url}"
+        post << "【アイマス公式ブログ更新情報】\n#{title}\n#{url}\n#imas_blog\n"
     end
 end
 
