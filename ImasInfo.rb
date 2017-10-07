@@ -22,6 +22,7 @@ rescue
   f.puts(Time.now)
   f.puts("アクセスできませんでした。\n#{src}")
   f.puts(log[-2])
+  f.puts("#imas_blog")
   return
 end
 
