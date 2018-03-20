@@ -50,19 +50,19 @@ article.each_with_index do |e, i|
   if(prevurl.eql?(url))
     break
   else
-    post << "【アイマス公式ブログ更新情報】\n#{title}\n#{url}\n#imas_blog\n"
+    post << "【アイマス公式ブログ更新情報】\n#{title}\n#{url}\n"
   end
 end
 
 post.reverse.each do |e|
-  client.create_status(e)
+  client.create_status("#{e}#imas_blog\n")
   feed_list.each do |id|
     feed = "@#{client.account(id).username} \n#{e}"
     client.create_status(feed, visibility: 'direct')
   end
   f.puts()
   f.puts(Time.now)
-  f.puts(e)
+  f.puts("#{e}#imas_blog\n")
 end
 
 f.close
