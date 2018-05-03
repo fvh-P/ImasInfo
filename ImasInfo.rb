@@ -3,6 +3,7 @@ require 'open-uri'
 require 'mastodon'
 require 'date'
 require 'dotenv'
+require 'cgi'
 
 Dir.chdir(File.expand_path("../", __FILE__))
 Dotenv.load
@@ -45,9 +46,11 @@ rescue
 end
 
 article.each_with_index do |e, i|
-  title = e.inner_html
+  title = CGI.unescapeHTML(e.inner_html)
   url = e.attribute('href').value
-  if(prevurl.eql?(url))
+  urlnum = url.sub(%r{http://idolmaster.jp/blog/\?p=}, '').to_i
+  prevnum = prevurl.sub(%r{http://idolmaster.jp/blog/\?p=}, '').to_i
+  if urlnum <= prevnum
     break
   else
     post << "【アイマス公式ブログ更新情報】\n#{title}\n#{url}\n"
