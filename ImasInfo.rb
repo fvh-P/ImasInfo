@@ -48,9 +48,7 @@ end
 article.each_with_index do |e, i|
   title = CGI.unescapeHTML(e.inner_html)
   url = e.attribute('href').value
-  urlnum = url.sub(%r{http://idolmaster.jp/blog/\?p=}, '').to_i
-  prevnum = prevurl.sub(%r{http://idolmaster.jp/blog/\?p=}, '').to_i
-  if urlnum <= prevnum
+  if prevurl.eql?(url)
     break
   else
     post << "【アイマス公式ブログ更新情報】\n#{title}\n#{url}\n"
