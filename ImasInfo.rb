@@ -46,6 +46,9 @@ rescue
 end
 
 article.each_with_index do |e, i|
+  e.search('br').each do |br|
+    br.replace("\n")
+  end
   title = CGI.unescapeHTML(e.inner_html)
   url = e.attribute('href').value
   if prevurl.eql?(url)
